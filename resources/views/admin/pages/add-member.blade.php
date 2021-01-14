@@ -1,8 +1,10 @@
 @extends('admin.index')
 
+@section('title', 'Add member | Laravel')
+
 @section('content')
-	<a href="{{ route('admin.list-member') }}"><button class="btn btn-warning">Quay lại</button></span></a>
-	<form action="{{ route('admin.add-member') }}" method="POST" role="form">
+	<a href="{{ route('facadeDB.list-member') }}"><button class="btn btn-warning">Quay lại</button></span></a>
+	<form action="{{ route('facadeDB.add-member') }}" method="POST" role="form">
 		<legend>Thêm mới học viên</legend>
 	
 		<div class="form-group">

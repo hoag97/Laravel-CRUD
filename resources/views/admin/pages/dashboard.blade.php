@@ -1,5 +1,7 @@
 @extends('admin.index')
 
+@section('title', 'Dashboard | Laravel')
+
 @section('content')
 
     <!-- Page Heading -->

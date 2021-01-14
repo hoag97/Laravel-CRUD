@@ -1,5 +1,7 @@
 @extends('admin.index')
 
+@section('title', 'List member | Laravel')
+
 @section('content')
 
 
@@ -32,8 +34,8 @@
                 <td>{{$value->email}}</td>
                 <td>{{$value->addres}}</td>
                 <td colspan="2">
-                    <a href="{{ route('admin.edit-member', $value->id) }}"><button class="btn btn-primary">Edit</button></a>
-                    <a onclick="return confirm('Bạn có muốn xóa học viên này không? ');" href="{{ route('admin.delete-member', $value->id) }}"><button class="btn btn-danger">Delete</button></a>
+                    <a href="{{ route('facadeDB.edit-member', $value->id) }}"><button class="btn btn-primary">Edit</button></a>
+                    <a onclick="return confirm('Bạn có muốn xóa học viên này không? ');" href="{{ route('facadeDB.delete-member', $value->id) }}"><button class="btn btn-danger">Delete</button></a>
                 </td>
             </tr>
         @endforeach

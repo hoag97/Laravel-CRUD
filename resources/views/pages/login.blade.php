@@ -1,6 +1,6 @@
 @extends('index') 
  
-@section('title', 'Login | IT-Plus')
+@section('title', 'Login | Laravel')
 
 @section('content')
 <form action="{{ route('login1') }}" method="POST" role="form">
@@ -9,12 +9,12 @@
 
 	<div class="form-group">
 		<label for="">Username</label>
-		<input type="email" required name="user" class="form-control" value="" placeholder="Nhập email của bạn">
+		<input type="email" required name="user" class="form-control" value="" placeholder="admin@gmail.com">
 	</div>
 
 	<div class="form-group">
 		<label for="">Password</label>
-		<input type="password" required name="passw" class="form-control" value="" placeholder="Nhập pass">
+		<input type="password" required name="passw" class="form-control" value="" placeholder="admin">
 	</div>
 
 	<button type="submit" name="sm_login" class="btn btn-primary">Đăng nhập</button>

@@ -105,7 +105,7 @@ Route::get('register', function() {
     return view('pages.register');
 })->name('register');
 
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'facadeDB'], function(){
 	
 
 	Route::get('/', 'HomeController@dashboard')->name('dashboard');
@@ -116,19 +116,19 @@ Route::group(['prefix' => 'admin'], function(){
 		Session::forget('name');	
 		Auth::logout();
 		return redirect()->route('login');
-	})->name('admin.logout');
+	})->name('facadeDB.logout');
 
-	Route::get('list-member', 'HomeController@listMember')->name('admin.list-member');
+	Route::get('list-member', 'HomeController@listMember')->name('facadeDB.list-member');
 
-	Route::get('delete-member/{id}', 'HomeController@deleteMember')->name('admin.delete-member');
+	Route::get('delete-member/{id}', 'HomeController@deleteMember')->name('facadeDB.delete-member');
 
-	Route::get('add-member', 'HomeController@getFac')->name('admin.get-fac');
+	Route::get('add-member', 'HomeController@getFac')->name('facadeDB.get-fac');
 
-    Route::post('add-member','HomeController@addMember')->name('admin.add-member');   
+    Route::post('add-member','HomeController@addMember')->name('facadeDB.add-member');   
 
-    Route::get('edit-member/{id}', 'HomeController@getMember')->name('admin.edit-member');
+    Route::get('edit-member/{id}', 'HomeController@getMember')->name('facadeDB.edit-member');
 
-    Route::post('edit-member/{id}', 'HomeController@editMember')->name('admin.edit-member');
+    Route::post('edit-member/{id}', 'HomeController@editMember')->name('facadeDB.edit-member');
 
 });  
 

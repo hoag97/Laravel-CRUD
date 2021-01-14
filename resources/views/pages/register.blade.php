@@ -1,6 +1,6 @@
 @extends('index')
 
-@section('title', 'Register | IT-Plus')
+@section('title', 'Register | Laravel')
 
 @section('content')
 <form action="" method="POST">

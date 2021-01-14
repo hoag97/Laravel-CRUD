@@ -28,7 +28,7 @@ class HomeController extends Controller
     	
     	$del = DB::delete("DELETE FROM members WHERE id = :id", ['id' => $id]);
 
-       	return redirect()->route('admin.list-member')->with('noti', 'Xóa thành công!');
+       	return redirect()->route('facadeDB.list-member')->with('noti', 'Xóa thành công!');
     }
 
     function getFac(){
@@ -45,7 +45,7 @@ class HomeController extends Controller
     	$addres = $request->addres;
 
     	DB::insert('INSERT INTO members (name, faculty_id, email, phone, addres) values (:name, :faculty_id, :email, :phone, :addres)', ['name' => $name, 'faculty_id' => $faculty_id, 'email' => $email, 'phone' => $phone, 'addres' => $addres]);
-    	return redirect()->route('admin.list-member')->with('noti', 'Thêm mới thành công!');
+    	return redirect()->route('facadeDB.list-member')->with('noti', 'Thêm mới thành công!');
     }
 
     function getMember($id){
@@ -65,7 +65,7 @@ class HomeController extends Controller
     	$addres = $request->addres;
 
     	DB::update('UPDATE members SET name = :name, faculty_id = :faculty_id, email = :email, phone = :phone, addres = :addres WHERE id = :id', ['name' => $name, 'faculty_id' => $faculty_id, 'email' => $email, 'phone' => $phone, 'addres' => $addres, 'id' => $id]);
-    	return redirect()->route('admin.list-member')->with('noti', 'Cập nhật thành công!');
+    	return redirect()->route('facadeDB.list-member')->with('noti', 'Cập nhật thành công!');
     }
 
 }

@@ -1,8 +1,10 @@
 @extends('admin.index')
 
+@section('title', 'Edit member | Laravel')
+
 @section('content')
-<a href="{{ route('admin.list-member') }}"><button class="btn btn-warning">Quay lại</button></span></a>
-	<form action="{{ route('admin.edit-member', $member->id) }}" method="POST" role="form">
+<a href="{{ route('facadeDB.list-member') }}"><button class="btn btn-warning">Quay lại</button></span></a>
+	<form action="{{ route('facadeDB.edit-member', $member->id) }}" method="POST" role="form">
 		<legend>Sửa thông tin học viên <span></legend>
 	
 		<div class="form-group">
