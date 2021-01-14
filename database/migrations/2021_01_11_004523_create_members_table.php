@@ -22,6 +22,8 @@ class CreateMembersTable extends Migration
             $table->tinyInteger('status')->default(1);
             $table->timestamp('created_at')->useCurrent();
         });
+
+        
     }
 
     /**
