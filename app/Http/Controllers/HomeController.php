@@ -75,4 +75,11 @@ class HomeController extends Controller
     	return redirect()->route('facadeDB.list-member')->with('noti', 'Cập nhật thành công!');
     }
 
+    function searchPhone(Request $request){
+        $key = $request->key;
+        $rs = DB::select("SELECT members.id as 'id', members.name as 'name', facultys.title as 'faculty', members.phone as 'phone', members.email as 'email', members.addres as 'addres' FROM members, facultys WHERE phone LIKE :key AND members.faculty_id = facultys.id", ['key' => "%".$key."%"]);
+        $count = count($rs);
+        return view('admin.pages.list-member', ['rs' => $rs, 'key' => $key, 'count' => $count]);
+    }
+
 }

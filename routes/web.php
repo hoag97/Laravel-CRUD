@@ -130,6 +130,8 @@ Route::group(['prefix' => 'facadeDB'], function(){
 
     Route::post('edit-member/{id}', 'HomeController@editMember')->name('facadeDB.edit-member');
 
+    Route::post('list-member', 'HomeController@searchPhone')->name('facadeDB.search-phone');
+
 });  
 
 
