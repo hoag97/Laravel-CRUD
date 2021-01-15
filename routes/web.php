@@ -87,10 +87,10 @@ Route::post('/', function(Request $request){
 
 	if (count($rs) !=0 ) {
 		foreach($rs as $rslog) {
-        $rslog     = get_object_vars($rslog);
-		Session::put('id', $rslog['id']);
-        Session::put('name', $rslog['name']);
-        
+        	$rslog     = get_object_vars($rslog);
+			Session::put('id', $rslog['id']);
+        	Session::put('name', $rslog['name']);
+        	Session::put('role', $rslog['role']);
 		}
 		return redirect()->route('dashboard'); 
 	}else{

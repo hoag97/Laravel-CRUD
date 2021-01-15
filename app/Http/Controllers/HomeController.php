@@ -25,10 +25,17 @@ class HomeController extends Controller
     }
 
     function deleteMember($id){
-    	
-    	$del = DB::delete("DELETE FROM members WHERE id = :id", ['id' => $id]);
 
-       	return redirect()->route('facadeDB.list-member')->with('noti', 'Xóa thành công!');
+        if (Session::get('role') == 'admin') {
+
+            $del = DB::delete("DELETE FROM members WHERE id = :id", ['id' => $id]);
+
+            return redirect()->route('facadeDB.list-member')->with('noti', 'Xóa thành công!');
+        }else{
+            return redirect()->route('facadeDB.list-member')->with('noti1', 'Bạn không có quyền xóa!');
+        }
+    	
+    	
     }
 
     function getFac(){
