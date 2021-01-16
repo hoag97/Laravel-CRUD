@@ -3,7 +3,8 @@
 @section('title', 'Register | Laravel')
 
 @section('content')
-<form action="" method="POST">
+<form action="{{ route('register1')}}" method="POST">
+	@csrf 
 	<legend>Đăng ký tài khoản</legend>
 
 	<div class="form-group">
@@ -30,5 +31,9 @@
 	<span>Bạn đã có tài khoản <a href="{{Route('login')}}">Đăng nhập</a></span>
 
 </form>
+
+<br>
+
+@include('notification.noti_status')
 
 @endsection
