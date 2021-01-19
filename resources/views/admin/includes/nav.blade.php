@@ -16,10 +16,10 @@
                 <a href="javascript:;" data-toggle="collapse" data-target="#QueryBuilder"><i class="fa fa-fw fa-arrows-v"></i>Query Builder<i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="QueryBuilder" class="collapse">
                     <li>
-                        <a href="{{ route('facadeDB.list-member') }}">List Member</a>
+                        <a href="{{ route('QueryBuilder.list-member') }}">List Member</a>
                     </li>
                     <li>
-                        <a href="{{ route('facadeDB.add-member') }}">Add Member</a>
+                        <a href="{{ route('QueryBuilder.add-member') }}">Add Member</a>
                     </li>
                 </ul>
             </li>

@@ -6,22 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
 
-class HomeController extends Controller
+class DBController extends Controller
 {
-    function dashboard(){
-
-        if (Session::has('id')) {
-            return view('admin.pages.dashboard');
-        }else{
-            return redirect()->route('login')->with('noti', 'Bạn cần đăng nhập!');;
-        }
-    	
-    }
-   	
+    
    	function listMember(){
    		$rs = DB::select("SELECT members.id as 'id', members.name as 'name', facultys.title as 'faculty', members.phone as 'phone', members.email as 'email', members.addres as 'addres' FROM members, facultys WHERE members.faculty_id = facultys.id");
 		
-    	return view('admin.pages.list-member',  ['rs' => $rs]); 
+    	return view('admin.pages.DB.list-member',  ['rs' => $rs]); 
     }
 
     function deleteMember($id){
@@ -41,7 +32,7 @@ class HomeController extends Controller
     function getFac(){
     	$rs = DB::select("SELECT * FROM facultys");
 
-    	return view('admin.pages.add-member', ['rs' => $rs]);
+    	return view('admin.pages.DB.add-member', ['rs' => $rs]);
     }
 
     function addMember(Request $request){
@@ -61,7 +52,7 @@ class HomeController extends Controller
     	foreach ($member as $key => $value) {
     		$rs_member = $value;
     	}
-        return view('admin.pages.edit-member', ['id' => $id, 'rs' => $rs, 'member' => $rs_member]);	
+        return view('admin.pages.DB.edit-member', ['id' => $id, 'rs' => $rs, 'member' => $rs_member]);	
     }
 
     function editMember(Request $request, $id){
@@ -79,7 +70,7 @@ class HomeController extends Controller
         $key = $request->key;
         $rs = DB::select("SELECT members.id as 'id', members.name as 'name', facultys.title as 'faculty', members.phone as 'phone', members.email as 'email', members.addres as 'addres' FROM members, facultys WHERE phone LIKE :key AND members.faculty_id = facultys.id", ['key' => "%".$key."%"]);
         $count = count($rs);
-        return view('admin.pages.list-member', ['rs' => $rs, 'key' => $key, 'count' => $count]);
+        return view('admin.pages.DB.list-member', ['rs' => $rs, 'key' => $key, 'count' => $count]);
     }
 
 }

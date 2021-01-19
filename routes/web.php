@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DBController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request; 
+
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -17,64 +19,7 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('infos', function() {
-//     return 'đạt đầu moi óc chó';
-// })->name('infos');
-// Route::get('infos/name', function() {
-//     return 'dat ngu vkl';
-// });
-// Route::post('submit-infos', function() {
-//     echo "submit dữ liệu";
-// });
-// Route::match(['POST', 'GET'], 'students', function() {
-//     return 'giao diện hiển thị thông tin sinh viên';
-// });
-// Route::resource('news', 'NewsController'); //Tự động tạo ra các hàm ở NewsController CRUD
-
-// Route::group(['prefix' => 'admin'], function() {
-
-//     Route::get('list', function() {
-// 	    return 'hiển thị thành viên';
-// 	});
-
-// 	Route::get('create', function() {
-// 	    return 'Thêm mới';
-// 	});
-
-// 	Route::get('edit', function() {
-// 	    return 'Sửa học viên';
-// 	});
-
-// 	Route::get('get-name{/name}', function($name) {
-// 	    return 'Xin chào'.$name;
-// 	});
-
-// 	Route::get('sum/{number1}/{number2}', function($number1, $number2) {
-// 	    // echo "Tổng 2 số = ".($number1 + $number2);
-// 	    $sum = $number1 + $number2;
-// 	    if ($sum > 100) {
-// 	    	return redirect(route('infos'));
-// 	    }else{
-// 	    	return redirect('/');
-// 	    }
-// 	});
-// });
-
-
-// Route::get('home', function() {
-//      return view('home');   
-// });   
-
-// Route::get('home', function() {
-//      $name = 'Hoag';
-//      $age = 23;
-//      return view('home', ['name' => $name, 'age' => $age]);
-// }); 
-
+/* Login & Register */
 Route::get('/', function() {
     return view('pages.login');
 })->name('login');
@@ -100,7 +45,6 @@ Route::post('/', function(Request $request){
 })->name('login1');
 
 
-
 Route::get('register', function() {
     return view('pages.register');
 })->name('register');
@@ -120,10 +64,11 @@ Route::post('register', function(Request $request){
 	}
 })->name('register1');
 
-Route::group(['prefix' => 'facadeDB'], function(){
-	
+/* Admin page */
 
-	Route::get('/', 'HomeController@dashboard')->name('dashboard');
+Route::group(['prefix' => 'admin'], function(){
+
+	Route::get('/', 'AdminController@dashboard')->name('dashboard');
 
 	Route::get('logout', function(){
 		Session::flush();
@@ -131,22 +76,47 @@ Route::group(['prefix' => 'facadeDB'], function(){
 		Session::forget('name');	
 		Auth::logout();
 		return redirect()->route('login');
-	})->name('facadeDB.logout');
+	})->name('logout');
+});
 
-	Route::get('list-member', 'HomeController@listMember')->name('facadeDB.list-member');
+/* Facade DB */
 
-	Route::get('delete-member/{id}', 'HomeController@deleteMember')->name('facadeDB.delete-member');
+Route::group(['prefix' => 'facadeDB'], function(){
 
-	Route::get('add-member', 'HomeController@getFac')->name('facadeDB.get-fac');
+	Route::get('list-member', 'DBController@listMember')->name('facadeDB.list-member');
 
-    Route::post('add-member','HomeController@addMember')->name('facadeDB.add-member');   
+	Route::get('delete-member/{id}', 'DBController@deleteMember')->name('facadeDB.delete-member');
 
-    Route::get('edit-member/{id}', 'HomeController@getMember')->name('facadeDB.edit-member');
+	Route::get('add-member', 'DBController@getFac')->name('facadeDB.get-fac');
 
-    Route::post('edit-member/{id}', 'HomeController@editMember')->name('facadeDB.edit-member');
+    Route::post('add-member','DBController@addMember')->name('facadeDB.add-member');   
 
-    Route::post('list-member', 'HomeController@searchPhone')->name('facadeDB.search-phone');
+    Route::get('edit-member/{id}', 'DBController@getMember')->name('facadeDB.edit-member');
 
-});  
+    Route::post('edit-member/{id}', 'DBController@editMember')->name('facadeDB.edit-member');
+
+    Route::post('list-member', 'DBController@searchPhone')->name('facadeDB.search-phone');
+
+});
+
+/* Query Builder */
+
+Route::group(['prefix' => 'QueryBuilder'], function(){
+
+	Route::get('list-member', 'DQBController@listMember')->name('QueryBuilder.list-member');
+
+	Route::get('delete-member/{id}', 'DQBController@deleteMember')->name('QueryBuilder.delete-member');
+
+	Route::get('add-member', 'DQBController@getFac')->name('QueryBuilder.get-fac');
+
+    Route::post('add-member','DQBController@addMember')->name('QueryBuilder.add-member');   
+
+    Route::get('edit-member/{id}', 'DQBController@getMember')->name('QueryBuilder.edit-member');
+
+    Route::post('edit-member/{id}', 'DQBController@editMember')->name('QueryBuilder.edit-member');
+
+    Route::post('list-member', 'DQBController@searchPhone')->name('QueryBuilder.search-phone');
+
+});
 
 

@@ -8,12 +8,12 @@
 		<legend>Sửa thông tin học viên <span></legend>
 	
 		<div class="form-group">
-			<label for="name">Name <span style="color: red;">(*)</span></label>
+			<label for="name">Họ và tên <span style="color: red;">(*)</span></label>
 			<input type="text" required="" class="form-control" name="name" id="name" value="{{$member->name}}" />
 		</div>
 
 		<div class="form-group">	
-			<label for="faculty">Faculty <span style="color: red;">(*)</span></label>
+			<label for="faculty">Khoa <span style="color: red;">(*)</span></label>
 			<select class="form-control" name="faculty" id="faculty">
 				@foreach ($rs as $value)
 					<option @if($member->faculty_id === $value->id) {{'selected'}} @endif value="{{$value->id}}">{{$value->title}}</option>
@@ -27,12 +27,12 @@
 		</div>
 
 		<div class="form-group">
-			<label for="phone">Phone <span style="color: red;">(*)</span></label>
+			<label for="phone">Số điện thoại <span style="color: red;">(*)</span></label>
 			<input type="number" maxlength="10" required="" class="form-control" name="phone" id="phone" value="{{$member->phone}}" />
 		</div>
 
 		<div class="form-group">
-			<label for="addres">Addres <span style="color: red;">(*)</span></label>
+			<label for="addres">Địa chỉ <span style="color: red;">(*)</span></label>
 			<input type="text" min="10" max="10" required="" class="form-control" name="addres" id="addres" value="{{$member->addres}}" />
 		</div>
 		
