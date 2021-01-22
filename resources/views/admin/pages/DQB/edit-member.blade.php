@@ -3,12 +3,19 @@
 @section('title', 'Edit member | Laravel')
 
 @section('content')
-<a href="{{ route('facadeDB.list-member') }}"><button class="btn btn-warning">Quay lại</button></span></a>
-	<form action="{{ route('facadeDB.edit-member', $member->id) }}" method="POST" role="form">
+<a href="{{ route('QueryBuilder.list-member') }}"><button class="btn btn-warning">Quay lại</button></span></a>
+	<form action="{{ route('QueryBuilder.edit-member', $member->id) }}" method="POST" role="form">
 		<legend>Sửa thông tin học viên <span></legend>
-
+			
 		@include('admin.notification.noti_status')
-	
+		@if(count($errors))
+			@foreach ($errors->all() as $err)
+			<div class="alert alert-danger">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<strong></strong></br> {{$err}} </br>
+			</div>
+			@endforeach
+		@endif
 		<div class="form-group">
 			<label for="name">Họ và tên <span style="color: red;">(*)</span></label>
 			<input type="text" required="" class="form-control" name="name" id="name" value="{{$member->name}}" />

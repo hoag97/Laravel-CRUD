@@ -11,8 +11,9 @@ class DBController extends Controller
     
    	function listMember(){
    		$rs = DB::select("SELECT members.id as 'id', members.name as 'name', facultys.title as 'faculty', members.phone as 'phone', members.email as 'email', members.addres as 'addres' FROM members, facultys WHERE members.faculty_id = facultys.id");
+        $count_rs = count($rs);
 		
-    	return view('admin.pages.DB.list-member',  ['rs' => $rs]); 
+    	return view('admin.pages.DB.list-member',  ['rs' => $rs, 'count_rs' => $count_rs]); 
     }
 
     function deleteMember($id){
@@ -42,8 +43,17 @@ class DBController extends Controller
     	$phone = $request->phone;
     	$addres = $request->addres;
 
-    	DB::insert('INSERT INTO members (name, faculty_id, email, phone, addres) values (:name, :faculty_id, :email, :phone, :addres)', ['name' => $name, 'faculty_id' => $faculty_id, 'email' => $email, 'phone' => $phone, 'addres' => $addres]);
-    	return redirect()->route('facadeDB.list-member')->with('noti', 'Thêm mới thành công!');
+        $check = DB::select('SELECT *FROM members WHERE phone = :phone OR email = :email', ['phone' => $phone, 'email' => $email]);
+        if (count($check) == 0) {
+            if ($name != '' && $email != '' && $phone != '' && $addres != '') {
+                DB::insert('INSERT INTO members (name, faculty_id, email, phone, addres) values (:name, :faculty_id, :email, :phone, :addres)', ['name' => $name, 'faculty_id' => $faculty_id, 'email' => $email, 'phone' => $phone, 'addres' => $addres]);
+                return redirect()->route('facadeDB.list-member')->with('noti', 'Thêm mới thành công!');
+            }else{
+                return redirect()->route('facadeDB.add-member')->with('noti1', 'Dữ liệu không được để trống!');
+            }
+        }else{
+            return redirect()->route('facadeDB.add-member')->with('noti1', 'SĐT hoặc Email đã trùng!');
+        }
     }
 
     function getMember($id){
@@ -62,15 +72,26 @@ class DBController extends Controller
     	$phone = $request->phone;
     	$addres = $request->addres;
 
-    	DB::update('UPDATE members SET name = :name, faculty_id = :faculty_id, email = :email, phone = :phone, addres = :addres WHERE id = :id', ['name' => $name, 'faculty_id' => $faculty_id, 'email' => $email, 'phone' => $phone, 'addres' => $addres, 'id' => $id]);
-    	return redirect()->route('facadeDB.list-member')->with('noti', 'Cập nhật thành công!');
+        $check = DB::select('SELECT *FROM members WHERE id != :id AND (phone = :phone OR email = :email)', ['id' => $id, 'phone' => $phone, 'email' => $email]);
+
+        if (count($check) == 0 ) {
+            if ($name != '' && $email != '' && $phone != '' && $addres != '') {
+                DB::update('UPDATE members SET name = :name, faculty_id = :faculty_id, email = :email, phone = :phone, addres = :addres WHERE id = :id', ['name' => $name, 'faculty_id' => $faculty_id, 'email' => $email, 'phone' => $phone, 'addres' => $addres, 'id' => $id]);
+                return redirect()->route('facadeDB.list-member')->with('noti', 'Cập nhật thành công!');
+            }else{
+                return redirect()->route('facadeDB.edit-member', $id)->with('noti1', 'Dữ liệu không được để trống!');
+            }
+        }else{
+            return redirect()->route('facadeDB.edit-member', $id)->with('noti1', 'SĐT hoặc Email đã trùng!');
+        }
     }
 
     function searchPhone(Request $request){
         $key = $request->key;
         $rs = DB::select("SELECT members.id as 'id', members.name as 'name', facultys.title as 'faculty', members.phone as 'phone', members.email as 'email', members.addres as 'addres' FROM members, facultys WHERE phone LIKE :key AND members.faculty_id = facultys.id", ['key' => "%".$key."%"]);
         $count = count($rs);
-        return view('admin.pages.DB.list-member', ['rs' => $rs, 'key' => $key, 'count' => $count]);
+        $count_rs = count($rs);
+        return view('admin.pages.DB.list-member', ['rs' => $rs, 'key' => $key, 'count' => $count, 'count_rs' => $count_rs]);
     }
 
 }
