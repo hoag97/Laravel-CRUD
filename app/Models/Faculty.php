@@ -9,9 +9,13 @@ class Faculty extends Model
     protected $table = 'facultys';
     protected $primaryKey = 'id';
 
+      protected $fillable = [
+        'title', 'status'
+    ];
+
 
     public function member(){
-    	return $this->hasMany('App\Models\Member', 'id', 'id');
+    	return $this->hasMany(Member::class, 'faculty_id', 'id');
     }
 
 }

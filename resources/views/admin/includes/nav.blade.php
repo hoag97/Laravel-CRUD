@@ -28,10 +28,10 @@
                 <a href="javascript:;" data-toggle="collapse" data-target="#ORM"><i class="fa fa-fw fa-arrows-v"></i>ORM<i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="ORM" class="collapse">
                     <li>
-                        <a href="{{ route('facadeDB.list-member') }}">List Member</a>
+                        <a href="{{ route('ORM.list-member') }}">List Member</a>
                     </li>
                     <li>
-                        <a href="{{ route('facadeDB.add-member') }}">Add Member</a>
+                        <a href="{{ route('ORM.add-member') }}">Add Member</a>
                     </li>
                 </ul>
             </li>

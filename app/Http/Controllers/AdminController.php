@@ -17,4 +17,11 @@ class AdminController extends Controller
         }
         
     }
+
+    function logout(){
+    	Session::flush();
+		Session::forget('id');
+		Session::forget('name');	
+		return redirect()->route('login');
+    }
 }

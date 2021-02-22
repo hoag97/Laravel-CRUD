@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
 	public $timestamps = false;
-    protected $table = "members"; // Khai báo tên bảng mà model sẽ làm việc
-    protected $primaryKey = 'id'; // Khai báo khóa chỉnh của bảng, để sử dụng cho các phương thức về sau
-    // protected $fillable = [
-    // 	'name'
-    // ]; // Muốn lấy ra trường nào trong bảng thì liệt kê vào fillable;
+    protected $table = "members";
+    protected $primaryKey = 'id'; 
+    protected $fillable = [
+    	'name', 'phone', 'email', 'addres', 'faculty_id'
+    ];
 
     public function faculty(){
-    	return $this->belongsTo('App\Models\Faculty', 'id');
+    	return $this->belongsTo(Faculty::class, 'faculty_id');
     }
 
 }

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use App\Models\Member;
+use App\Models\Faculty;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,63 +22,32 @@ use Illuminate\Support\Facades\DB;
 */
 
 /* Login & Register */
-Route::get('/', function() {
-    return view('pages.login');
-})->name('login');
 
-Route::post('/', function(Request $request){
-	$user = $request->user;
-	$passw = $request->passw;
+Route::group(['prefix' => '/'], function() {
 
-	$rs = DB::select("SELECT * FROM users where email = :user AND password = :passw ", ['user' => $user, 'passw' => $passw]); 
+    Route::get('/', function() {
+	    return view('pages.login');
+	})->name('login');
 
-	if (count($rs) !=0 ) {
-		foreach($rs as $rslog) {
-        	$rslog     = get_object_vars($rslog);
-			Session::put('id', $rslog['id']);
-        	Session::put('name', $rslog['name']);
-        	Session::put('role', $rslog['role']);
-		}
-		return redirect()->route('dashboard'); 
-	}else{
-		return redirect()->route('login')->with('noti', 'Tên đăng nhập hoặc mật khẩu không đúng!');
-	}
-	
-})->name('login1');
+	Route::post('/', 'LoginController@Login')->name('login1');
+});
 
+Route::group(['prefix' => 'Register'], function() {
 
-Route::get('register', function() {
-    return view('pages.register');
-})->name('register');
+    Route::get('/', function() {
+	    return view('pages.register');
+	})->name('register');
 
-Route::post('register', function(Request $request){
-	$name = $request->name;
-	$email = $request->user;
-	$passw = $request->passw;
-	$confirm_pass = $request->confirm_pass;
-
-	if ($passw == $confirm_pass) {
-		DB::insert('INSERT INTO users (name, email, password) values (:name, :email, :passw)', ['name' => $name, 'email' => $email, 'passw' => $passw]);
-
-		return redirect()->route('login')->with('noti1', 'Đăng kí thành công!');
-	}else{
-		return redirect()->route('register')->with('noti', 'Mật khẩu xác nhận không trùng khớp!');
-	}
-})->name('register1');
+	Route::post('/', 'RegisterController@Register')->name('register1');
+});
 
 /* Admin page */
 
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'Admin'], function(){
 
 	Route::get('/', 'AdminController@dashboard')->name('dashboard');
 
-	Route::get('logout', function(){
-		Session::flush();
-		Session::forget('id');
-		Session::forget('name');	
-		Auth::logout();
-		return redirect()->route('login');
-	})->name('logout');
+	Route::get('logout', 'AdminController@logout')->name('logout');
 });
 
 /* Facade DB */
@@ -119,4 +90,21 @@ Route::group(['prefix' => 'QueryBuilder'], function(){
 
 });
 
+/* Eloquent ORM */
 
+Route::group(['prefix' => 'ORM'], function(){
+
+	Route::get('list-member', 'ORMController@listMember')->name('ORM.list-member');
+
+	Route::get('add-member', 'ORMController@getFac')->name('ORM.get-fac');
+
+	Route::post('add-member', 'ORMController@addMember')->name('ORM.add-member');
+
+	Route::get('edit-member/{id}', 'ORMController@getMember')->name('ORM.get-member');
+
+	Route::post('edit-member/{id}', 'ORMController@editMember')->name('ORM.edit-member');
+
+	Route::get('delete-member/{id}', 'ORMController@deleteMember')->name('ORM.delete-member');
+
+	Route::post('list-member', 'ORMController@searchPhone')->name('ORM.seach-phone');
+});
